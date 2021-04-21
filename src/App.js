@@ -66,7 +66,9 @@ function App() {
       if (!world.numAnts) {
         setDoneText('Bugs win!')
         return
-      } else if (!world.numBugs) {
+      }
+
+      if (!world.numBugs) {
         setDoneText('Ants win!')
         return
       }
