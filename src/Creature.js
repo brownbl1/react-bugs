@@ -72,7 +72,7 @@ export class Doodlebug extends Creature {
   }
 
   move() {
-    if (this.health === 1) {
+    if (this.health === 0) {
       const next = this.next
       this.detach()
       this.world.grid[this.x][this.y] = undefined
@@ -95,18 +95,14 @@ export class Doodlebug extends Creature {
       this.world.grid[x][y] = undefined
       this.world.numAnts--
       this.resetHealth()
-    } else {
-      pos = emptyPosition(this.world.grid, positions)
-      this.health--
-    }
 
-    if (pos) {
       this.world.grid[this.x][this.y] = undefined
-
-      const [x, y] = pos
       this.x = x
       this.y = y
       this.world.grid[x][y] = this
+    } else {
+      pos = emptyPosition(this.world.grid, positions)
+      this.health--
     }
 
     return next
