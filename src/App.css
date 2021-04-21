@@ -1,5 +1,35 @@
-.App {
+/* .App {
   text-align: center;
+} */
+
+.grid {
+  margin: 5px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 30px;
+  width: 30px;
+  font-weight: bold;
+
+  /* border: 1px solid black; */
+}
+
+.cell.A {
+  color: red;
+}
+
+.cell.D {
+  color: blue;
 }
 
 .App-logo {
@@ -18,8 +48,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
