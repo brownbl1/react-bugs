@@ -75,7 +75,7 @@ function App() {
         setStep(step + 1)
       }
     }, 500)
-  }, [world, step])
+  }, [step])
 
   return (
     <div className="App">
