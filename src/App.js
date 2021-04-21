@@ -82,21 +82,20 @@ function App() {
   return (
     <div className="App">
       <div className="grid">
-        {world &&
-          world.grid.map((row, i) => {
-            return (
-              <div key={`row-${i}`} className="row">
-                {row.map((cell, j) => {
-                  const c = cell && cell.toString()
-                  return (
-                    <div key={`cell-${j}`} className={`cell ${c}`}>
-                      {c}
-                    </div>
-                  )
-                })}
-              </div>
-            )
-          })}
+        {world.grid.map((row, i) => {
+          return (
+            <div key={`row-${i}`} className="row">
+              {row.map((cell, j) => {
+                const c = cell && cell.toString()
+                return (
+                  <div key={`cell-${j}`} className={`cell ${c}`}>
+                    {c}
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
       </div>
       <div>step: {step}</div>
       <div>bugs: {world.numBugs}</div>
