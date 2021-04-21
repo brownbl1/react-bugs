@@ -1,17 +1,18 @@
 import { Item } from 'linked-list'
 
 class Creature extends Item {
-  constructor(world, x, y, ava) {
+  constructor(world, x, y, ava, timeTillSpawn) {
     super()
 
     this.world = world
     this.x = x
     this.y = y
     this.ava = ava
-  }
+    this.timeTillSpawn = timeTillSpawn
 
-  pos() {
-    return [this.x, this.y]
+    this.resetTimeTillSpawn = () => {
+      this.timeTillSpawn = timeTillSpawn
+    }
   }
 
   toString() {
@@ -21,8 +22,7 @@ class Creature extends Item {
 
 export class Ant extends Creature {
   constructor(world, x, y) {
-    super(world, x, y, 'A')
-    this.timeTillSpawn = 3
+    super(world, x, y, 'A', 3)
   }
 
   move() {
@@ -42,12 +42,11 @@ export class Ant extends Creature {
   }
 
   spawn() {
-    this.timeTillSpawn = this.timeTillSpawn - 1
-    if (this.timeTillSpawn > 0) {
+    if (--this.timeTillSpawn > 0) {
       return
     }
 
-    this.timeTillSpawn = 3
+    this.resetTimeTillSpawn()
     const positions = getPositions(this.world.grid, this.x, this.y)
     const emptyPos = emptyPosition(this.world.grid, positions)
 
@@ -56,16 +55,20 @@ export class Ant extends Creature {
       const ant = new Ant(this.world, x, y)
       this.list.prepend(ant)
       this.world.grid[x][y] = ant
-      this.world.numAnts = this.world.numAnts + 1
+      this.world.numAnts++
     }
   }
 }
 
 export class Doodlebug extends Creature {
   constructor(world, x, y) {
-    super(world, x, y, 'D')
-    this.health = 3
-    this.timeTillSpawn = 5
+    super(world, x, y, 'D', 5)
+
+    const health = 3
+    this.health = health
+    this.resetHealth = () => {
+      this.health = health
+    }
   }
 
   move() {
@@ -73,7 +76,7 @@ export class Doodlebug extends Creature {
       const next = this.next
       this.detach()
       this.world.grid[this.x][this.y] = undefined
-      this.world.numBugs = this.world.numBugs - 1
+      this.world.numBugs--
       return next
     }
 
@@ -90,11 +93,11 @@ export class Doodlebug extends Creature {
 
       ant.detach()
       this.world.grid[x][y] = undefined
-      this.world.numAnts = this.world.numAnts - 1
-      this.health = 3
+      this.world.numAnts--
+      this.resetHealth()
     } else {
       pos = emptyPosition(this.world.grid, positions)
-      this.health = this.health - 1
+      this.health--
     }
 
     if (pos) {
@@ -110,12 +113,11 @@ export class Doodlebug extends Creature {
   }
 
   spawn() {
-    this.timeTillSpawn = this.timeTillSpawn - 1
-    if (this.timeTillSpawn > 0) {
+    if (--this.timeTillSpawn > 0) {
       return
     }
 
-    this.timeTillSpawn = 5
+    this.resetTimeTillSpawn()
 
     const positions = getPositions(this.world.grid, this.x, this.y)
     const emptyPos = emptyPosition(this.world.grid, positions)
@@ -125,7 +127,7 @@ export class Doodlebug extends Creature {
       const bug = new Doodlebug(this.world, x, y)
       this.list.prepend(bug)
       this.world.grid[x][y] = bug
-      this.world.numBugs = this.world.numBugs + 1
+      this.world.numBugs++
     }
   }
 }
