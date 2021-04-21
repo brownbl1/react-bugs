@@ -55,7 +55,7 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      let curr = world && world.list.head
+      let curr = world.list.head
       while (curr) {
         const next = curr.move()
         curr.spawn()
@@ -63,15 +63,15 @@ function App() {
         curr = next
       }
 
-      if (world && !world.numAnts) {
+      if (!world.numAnts) {
         setDoneText('Bugs win!')
         return
-      } else if (world && !world.numBugs) {
+      } else if (!world.numBugs) {
         setDoneText('Ants win!')
         return
       }
 
-      if (world && world.numAnts && world.numBugs) {
+      if (world.numAnts && world.numBugs) {
         setStep(step + 1)
       }
     }, 500)
@@ -97,8 +97,8 @@ function App() {
           })}
       </div>
       <div>step: {step}</div>
-      <div>bugs: {world && world.numBugs}</div>
-      <div>ants: {world && world.numAnts}</div>
+      <div>bugs: {world.numBugs}</div>
+      <div>ants: {world.numAnts}</div>
       <div>{doneText}</div>
     </div>
   )
